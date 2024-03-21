@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ns.blogger.entities.User;
+import com.ns.blogger.exceptions.ResourceNotFound;
 import com.ns.blogger.models.UserDto;
 import com.ns.blogger.repo.UserRepo;
 import com.ns.blogger.services.UserService;
@@ -28,17 +29,21 @@ public class UserImpl implements UserService {
 
 	@Override
 	public UserDto updateUser(UserDto userDto, Integer id) {
-		if(userRepo.existsById(id)) {
-		User user = userRepo.getById(id);
-		userRepo.save(this.userDtoToUser(userDto));
+		
+		User user = userRepo.findById(id).orElseThrow(()->new ResourceNotFound("User", "Id", id));
+		user.setName(userDto.getName());
+		user.setEmail(userDto.getEmail());
+		user.setPassword(userDto.getPassword());
+		user.setAbout(userDto.getAbout());
+		
+		userRepo.save(user);
 		return this.userToUserDto(user);
-		}
-		return null;
+		
 	}
 
 	@Override
 	public UserDto getUserById(Integer id) {
-		User user = userRepo.getById(id);
+		User user = userRepo.findById(id).orElseThrow(()->new ResourceNotFound("User", "Id", id));
 		return this.userToUserDto(user);
 	}
 
@@ -50,6 +55,8 @@ public class UserImpl implements UserService {
 
 	@Override
 	public void deleteUser(Integer id) {
+		User user = userRepo.findById(id).orElseThrow(()->new ResourceNotFound("User", "Id", id));
+		if(user!=null)
 		userRepo.deleteById(id);
 	}
 	
