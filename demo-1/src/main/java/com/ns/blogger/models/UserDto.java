@@ -1,5 +1,10 @@
 package com.ns.blogger.models;
 
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,11 +12,25 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserDto {
-		Integer id;
-		String name;
-		String email;
-		String password;
-		String about;
+		
+	
+	Integer id;
+	
+	@NotEmpty(message="Name should be min of 3 chars and max 8 chars.")
+	@Size(min=3,max=8)
+	String name;
+	
+	@Email(message="Email is not valid.")	
+	String email;
+	
+	@NotEmpty(message="Password should be min of 3 chars and max 8 chars.")
+	@Size(min=3,max=8)
+	String password;
+	
+	@NotEmpty(message="About can not empty.")
+	String about;
+		
+		
 		public Integer getId() {
 			return id;
 		}
