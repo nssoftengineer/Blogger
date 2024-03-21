@@ -1,4 +1,4 @@
-package com.ns.bolgger.models;
+package com.ns.blogger.models;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ns.blogger.entities.User;
+import com.ns.blogger.models.UserDto;
 import com.ns.blogger.repo.UserRepo;
 import com.ns.blogger.services.UserService;
-import com.ns.bolgger.models.UserDto;
+
+
 
 @Service
 public class UserImpl implements UserService {
@@ -57,6 +59,7 @@ public class UserImpl implements UserService {
 		user.setEmail(userDto.getEmail());
 		user.setPassword(userDto.getPassword());
 		user.setAbout(userDto.getAbout());
+		user.setName(userDto.getName());
 		
 		return user;
 		
@@ -68,9 +71,12 @@ public class UserImpl implements UserService {
 		userDto.setEmail(user.getEmail());
 		userDto.setPassword(user.getPassword());
 		userDto.setAbout(user.getAbout());
+		userDto.setName(user.getName());
 		
 		return userDto;
 		
 	}
+
+
 
 }

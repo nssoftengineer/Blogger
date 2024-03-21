@@ -1,19 +1,20 @@
-package com.ns.bolgger.controller;
+package com.ns.blogger.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ns.blogger.models.UserDto;
 import com.ns.blogger.services.UserService;
-import com.ns.bolgger.models.UserDto;
 
 @RestController
 @RequestMapping("/api/users")
-public class UserController {
+public class UserController2 {
 	
 	@Autowired
 	UserService userService;
@@ -25,6 +26,13 @@ public class UserController {
 		return new ResponseEntity<>(createUserDto,HttpStatus.CREATED);
 		
 	} 
+	
+	@RequestMapping("/get")
+	public String get() {
+		
+		return "neeraj";
+		
+	}
 	
 	
 }
