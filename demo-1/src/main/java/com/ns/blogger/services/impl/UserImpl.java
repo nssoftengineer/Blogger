@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.ns.blogger.entities.User;
@@ -76,6 +77,26 @@ public class UserImpl implements UserService {
 		return pagerResponse;
 	}
 
+	
+	//pagination with sorting
+	@Override
+	public UserPagerResponse getAllUserByPageSizeSort(Integer pageNumber, Integer PageSize,String sortby,String groupBy) {
+		Pageable pageable;
+		if(groupBy.equalsIgnoreCase("asc"))
+		pageable= PageRequest.of(pageNumber, PageSize,Sort.by(sortby).ascending());
+		else
+			pageable= PageRequest.of(pageNumber, PageSize,Sort.by(sortby).descending());
+		
+		Page<User> pages = userRepo.findAll(pageable);
+		List<User> listUser = pages.getContent();
+		List<UserDto>listDto = listUser.stream().map(user->this.userToUserDto(user)).collect(Collectors.toList());
+		
+		UserPagerResponse pagerResponse=new UserPagerResponse(listDto, pages.getNumber(), pages.getSize(), pages.getTotalElements(), pages.getTotalPages(), pages.isLast());
+		
+		return pagerResponse;
+	}
+	
+	
 	@Override
 	public void deleteUser(Integer id) {
 		User user = userRepo.findById(id).orElseThrow(()->new ResourceNotFound("User", "Id", id));

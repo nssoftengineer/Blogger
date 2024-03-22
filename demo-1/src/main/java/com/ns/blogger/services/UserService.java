@@ -19,6 +19,7 @@ public interface UserService {
 	UserDto getUserById(Integer id);
 	List<UserDto> getAllUsers();
 	UserPagerResponse getAllUserByPageSize(Integer pageNumber, Integer PageSize);
+	UserPagerResponse getAllUserByPageSizeSort(Integer pageNumber, Integer PageSize,String sortBy,String groupBy);
 	void deleteUser(Integer id);
 
 }

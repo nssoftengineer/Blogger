@@ -85,11 +85,21 @@ public class UserController2 {
 	
 	//above function also same only request parameter change
 	//http://localhost:8989/api/users/get?pageNumber=0&pageSize=3
+//	@GetMapping("/get")
+//	public ResponseEntity<UserPagerResponse> getUserAllUserByPage2(@RequestParam(value= "pageNumber", defaultValue = "0", required = false)
+//	Integer pagenumber,@RequestParam(value="pageSize",defaultValue = "5", required = false) Integer pageSize) {
+//			
+//		return new ResponseEntity<UserPagerResponse>(userService.getAllUserByPageSize(pagenumber,pageSize),HttpStatus.OK);
+//		
+//	}
+	
 	@GetMapping("/get")
-	public ResponseEntity<UserPagerResponse> getUserAllUserByPage2(@RequestParam(value= "pageNumber", defaultValue = "0", required = false)
-	Integer pagenumber,@RequestParam(value="pageSize",defaultValue = "5", required = false) Integer pageSize) {
+	public ResponseEntity<UserPagerResponse> getUserAllUserByPageBySort(@RequestParam(value= "pageNumber", defaultValue = "0", required = false)
+	Integer pagenumber,@RequestParam(value="pageSize",defaultValue = "5", required = false) Integer pageSize,
+	@RequestParam(value="sortBy",defaultValue = "id", required = false) String sortBy,
+	@RequestParam(value="groupBy",defaultValue = "asc", required = false) String groupBy) {
 			
-		return new ResponseEntity<UserPagerResponse>(userService.getAllUserByPageSize(pagenumber,pageSize),HttpStatus.OK);
+		return new ResponseEntity<UserPagerResponse>(userService.getAllUserByPageSizeSort(pagenumber,pageSize,sortBy,groupBy),HttpStatus.OK);
 		
 	}
 	
