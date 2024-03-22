@@ -7,11 +7,15 @@ import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.ns.blogger.entities.User;
 import com.ns.blogger.exceptions.ResourceNotFound;
 import com.ns.blogger.models.UserDto;
+import com.ns.blogger.models.UserPagerResponse;
 import com.ns.blogger.repo.UserRepo;
 import com.ns.blogger.services.UserService;
 
@@ -56,6 +60,20 @@ public class UserImpl implements UserService {
 	public List<UserDto> getAllUsers() {
 		List<User> users = userRepo.findAll();
 		return users.stream().map(user->this.userToUserDto(user)).collect(Collectors.toList());
+	}
+	
+	
+	//pagination
+	@Override
+	public UserPagerResponse getAllUserByPageSize(Integer pageNumber, Integer PageSize) {
+		Pageable pageable= PageRequest.of(pageNumber, PageSize);
+		Page<User> pages = userRepo.findAll(pageable);
+		List<User> listUser = pages.getContent();
+		List<UserDto>listDto = listUser.stream().map(user->this.userToUserDto(user)).collect(Collectors.toList());
+		
+		UserPagerResponse pagerResponse=new UserPagerResponse(listDto, pages.getNumber(), pages.getSize(), pages.getTotalElements(), pages.getTotalPages(), pages.isLast());
+		
+		return pagerResponse;
 	}
 
 	@Override

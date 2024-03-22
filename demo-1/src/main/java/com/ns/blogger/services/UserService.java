@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.ns.blogger.models.UserDto;
+import com.ns.blogger.models.UserPagerResponse;
 
 
 
@@ -17,6 +18,7 @@ public interface UserService {
 	UserDto updateUser(UserDto user, Integer id);
 	UserDto getUserById(Integer id);
 	List<UserDto> getAllUsers();
+	UserPagerResponse getAllUserByPageSize(Integer pageNumber, Integer PageSize);
 	void deleteUser(Integer id);
 
 }
